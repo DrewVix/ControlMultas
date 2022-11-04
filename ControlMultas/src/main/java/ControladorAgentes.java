@@ -22,7 +22,7 @@ public class ControladorAgentes {
     public void alta(Agente a) {
         try {
             RandomAccessFile raf = new RandomAccessFile("agentes.dat", "rw");
-            
+
             raf.seek(raf.length());
             registroAgente(raf, a);
             System.out.println(Agente.getSize());
@@ -84,12 +84,12 @@ public class ControladorAgentes {
             for (int i = 0; i < total; i++) {
                 Agente a = leerAgentes(raf);
                 if (!a.isEstado()) {
-                    System.out.println(i+" "+a.toString());
+                    System.out.println(i + " " + a.toString());
                 }
             }
         } catch (Exception e) {
             e.getMessage();
-            
+
         }
 
     }
