@@ -20,7 +20,7 @@ public class Agente {
 
     @Override
     public String toString() {
-        return "Agente{" + "nombre=" + nombre + ", estado=" + estado + '}';
+        return "Agente{" + "nombre=" + nombre + '}';
     }
     
 

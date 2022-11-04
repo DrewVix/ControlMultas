@@ -1,4 +1,5 @@
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
@@ -21,11 +22,40 @@ public class ControladorAgentes {
     public void alta(Agente a) {
         try {
             RandomAccessFile raf = new RandomAccessFile("agentes.dat", "rw");
+            
             raf.seek(raf.length());
             registroAgente(raf, a);
+            System.out.println(Agente.getSize());
         } catch (Exception e) {
             e.getMessage();
             System.out.println("FALLO EN ALTA DE AGENTE.");
+        }
+
+    }
+
+    public void baja(int i) {
+        try {
+            RandomAccessFile raf = new RandomAccessFile("agentes.dat", "rw");
+            raf.seek(i * Agente.getSize());
+            Agente aux = consultaAgenteID(i);
+            aux.setEstado(true);
+            raf.seek(i * Agente.getSize());
+            registroAgente(raf, aux);
+        } catch (Exception e) {
+            e.getMessage();
+            System.out.println("ERROR EN EL REGISTRO DEL AGENTE.");
+        }
+
+    }
+
+    public void modificacion(int i, Agente a) {
+        try {
+            RandomAccessFile raf = new RandomAccessFile("agentes.dat", "rw");
+            raf.seek(i * Agente.getSize());
+            registroAgente(raf, a);
+        } catch (Exception e) {
+            e.getMessage();
+            System.out.println("ERROR EN LA MODIFICACION DEL AGENTE.");
         }
 
     }
@@ -35,6 +65,7 @@ public class ControladorAgentes {
         try {
 
             raf.writeChars(a.getNombre().toString());
+            raf.writeBoolean(a.isEstado());
 
         } catch (Exception ex) {
             ex.getMessage();
@@ -53,17 +84,19 @@ public class ControladorAgentes {
             for (int i = 0; i < total; i++) {
                 Agente a = leerAgentes(raf);
                 if (!a.isEstado()) {
-                    System.out.println(a);
+                    System.out.println(i+" "+a.toString());
                 }
             }
         } catch (Exception e) {
+            e.getMessage();
+            
         }
 
     }
 
     public Agente leerAgentes(RandomAccessFile raf) {
         try {
-            byte[] nombreArray = new byte[100];
+            byte[] nombreArray = new byte[50];
             raf.read(nombreArray);
             String nombre = new String(nombreArray);
 
@@ -76,6 +109,23 @@ public class ControladorAgentes {
             System.out.println("ERROR EN EL LISTADO DE AGENTES.");
         }
         return null;
+    }
+
+    public Agente consultaAgenteID(int i) {
+
+        try {
+            RandomAccessFile raf = new RandomAccessFile("agentes.dat", "rw");
+
+            raf.seek(i * Agente.getSize());
+
+            return leerAgentes(raf);
+
+        } catch (Exception e) {
+            System.out.println("ERROR: NO EXISTE ESE AGENTE.");
+        }
+
+        return null;
+
     }
 
 }
