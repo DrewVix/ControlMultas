@@ -9,25 +9,27 @@
  */
 public class Agente {
 
-    private int id;
     private StringBuilder nombre;
+    private boolean estado;
 
-    public Agente(int id, String nombre) {
-        this.id = id;
+    public Agente(String nombre, boolean estado) {
+
         setNombre(nombre);
+        this.estado = estado;
     }
 
     @Override
     public String toString() {
-        return "Agente{" + "id=" + id + ", nombre=" + nombre + '}';
+        return "Agente{" + "nombre=" + nombre + ", estado=" + estado + '}';
+    }
+    
+
+    public boolean isEstado() {
+        return estado;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public StringBuilder getNombre() {
@@ -38,8 +40,9 @@ public class Agente {
         this.nombre = new StringBuilder(nombre);
         this.nombre.setLength(25);
     }
-    public static int getSize(){
-        return 54;
+
+    public static int getSize() {
+        return 51;
     }
 
 }
