@@ -90,7 +90,7 @@ public class ControladorMultas {
 
     }
 
-    public void consultaAll() {
+    public void consultaAllifNotPagado() {
         try {
             RandomAccessFile raf = new RandomAccessFile("multas.dat", "r");
 
@@ -100,6 +100,44 @@ public class ControladorMultas {
             for (int i = 0; i < total; i++) {
                 Multa m = leerMultas(raf);
                 if (!m.isPagado()) {
+                    System.out.println(i + " " + m.toString());
+                }
+            }
+        } catch (Exception e) {
+            e.getMessage();
+
+        }
+
+    }
+    public void consultaAllifActivo() {
+        try {
+            RandomAccessFile raf = new RandomAccessFile("multas.dat", "r");
+
+            double total = raf.length() / Multa.getSize();
+            System.out.println(total);
+
+            for (int i = 0; i < total; i++) {
+                Multa m = leerMultas(raf);
+                if (m.isActivo()) {
+                    System.out.println(i + " " + m.toString());
+                }
+            }
+        } catch (Exception e) {
+            e.getMessage();
+
+        }
+
+    }
+    public void consultaAll() {
+        try {
+            RandomAccessFile raf = new RandomAccessFile("multas.dat", "r");
+
+            double total = raf.length() / Multa.getSize();
+            System.out.println(total);
+
+            for (int i = 0; i < total; i++) {
+                Multa m = leerMultas(raf);
+                if (m.isActivo() && !m.isPagado()) {
                     System.out.println(i + " " + m.toString());
                 }
             }

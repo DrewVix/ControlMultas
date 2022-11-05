@@ -50,7 +50,7 @@ public class Principal {
                     case 3:
                         System.out.println("ELIMINAR UNA MULTA: ");
                         System.out.println("--------------------");
-                        cm.consultaAll();
+                        cm.consultaAllifActivo();
                         System.out.println("INTRODUZCA EL NUMERO DE MULTA A ELIMINAR: ");
                         int id3 = Integer.parseInt(sc.nextLine());
                         cm.baja(id3);
@@ -95,7 +95,7 @@ public class Principal {
                     case 7:
                         System.out.println("PAGAR UNA MULTA: ");
                         System.out.println("-----------------");
-                        cm.consultaAll();
+                        cm.consultaAllifNotPagado();
                         System.out.println("INTRODUZCA EL NUMERO DE MULTA A PAGAR: ");
                         int id7 = Integer.parseInt(sc.nextLine());
                         cm.pagarMulta(id7);
