@@ -10,12 +10,12 @@
 public class Agente {
 
     private StringBuilder nombre;
-    private boolean estado;
+    private boolean borrado;
 
     public Agente(String nombre, boolean estado) {
 
         setNombre(nombre);
-        this.estado = estado;
+        this.borrado = estado;
     }
 
     @Override
@@ -24,12 +24,12 @@ public class Agente {
     }
     
 
-    public boolean isEstado() {
-        return estado;
+    public boolean isBorrado() {
+        return borrado;
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void setBorrado(boolean borrado) {
+        this.borrado = borrado;
     }
 
     public StringBuilder getNombre() {

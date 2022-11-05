@@ -31,10 +31,10 @@ public class Principal {
                         int nAgente = Integer.parseInt(sc.nextLine());
                         System.out.println("INTRODUZCA LA LOCALIDAD DESDE DONDE SE DETALLA LA MULTA: ");
                         String localidad = sc.nextLine();
-                        System.out.println("INTRODUZCA EL COSTE DE LA MULTA: ");
+                        System.out.println("INTRODUZCA EL COSTE EN EUROS DE LA MULTA: ");
                         int coste = Integer.parseInt(sc.nextLine());
 
-                        cm.alta(new Multa(nAgente, localidad, coste, false,true));
+                        cm.alta(new Multa(nAgente, localidad, coste, false,false));
 
                         break;
 
@@ -50,7 +50,7 @@ public class Principal {
                     case 3:
                         System.out.println("ELIMINAR UNA MULTA: ");
                         System.out.println("--------------------");
-                        cm.consultaAllifActivo();
+                        cm.consultaAllifNotBorrado();
                         System.out.println("INTRODUZCA EL NUMERO DE MULTA A ELIMINAR: ");
                         int id3 = Integer.parseInt(sc.nextLine());
                         cm.baja(id3);
@@ -76,11 +76,11 @@ public class Principal {
                         int numAgente6= Integer.parseInt(sc.nextLine());
                         System.out.println("INTRODUZCA LOCALIDAD PARA SU MODIFICACION: ");
                         String localidad6= sc.nextLine();
-                        System.out.println("INTRODUZCA EL COSTE MODIFICADO: ");
+                        System.out.println("INTRODUZCA EL COSTE EN EUROS MODIFICADO: ");
                         int coste6= Integer.parseInt(sc.nextLine());
                         
 
-                        cm.modificacion(id5, new Multa(numAgente6, localidad6, coste6, false,true));
+                        cm.modificacion(id5, new Multa(numAgente6, localidad6, coste6, false,false));
                         break;
                     case 6:
                         System.out.println("MODIFICACION DE AGENTE: ");

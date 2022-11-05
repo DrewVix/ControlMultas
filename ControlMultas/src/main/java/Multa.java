@@ -13,23 +13,20 @@ public class Multa {
     private StringBuilder localidad;
     private int coste;
     private boolean pagado;
-    private boolean activo;
+    private boolean borrado;
 
-    public Multa(int nAgente, String localidad, int coste, boolean pagado,boolean activo) {
+    public Multa(int nAgente, String localidad, int coste, boolean pagado, boolean borrado) {
         this.nAgente = nAgente;
         setLocalidad(localidad);
         this.coste = coste;
         this.pagado = pagado;
-        this.activo = activo;
+        this.borrado = borrado;
     }
 
     @Override
     public String toString() {
-        return "Multa{" + "nAgente=" + nAgente + ", localidad=" + localidad + ", coste=" + coste + ", pagado=" + pagado + ", activo=" + activo + '}';
+        return "Multa{" + "nAgente=" + nAgente + ", localidad=" + localidad + ", coste=" + coste + "€ , pagado=" + pagado + ", borrado=" + borrado + '}';
     }
-
-   
-    
 
     public boolean isPagado() {
         return pagado;
@@ -64,17 +61,15 @@ public class Multa {
         this.coste = coste;
     }
 
-    
-
-    public boolean isActivo() {
-        return activo;
+    public boolean isBorrado() {
+        return borrado;
     }
 
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    
+    public void setBorrado(boolean borrado) {
+        this.borrado = borrado;
+
     }
-    
+
     public static int getSize() {
         return 110;
     }

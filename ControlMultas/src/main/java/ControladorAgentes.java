@@ -38,7 +38,7 @@ public class ControladorAgentes {
             RandomAccessFile raf = new RandomAccessFile("agentes.dat", "rw");
             raf.seek(i * Agente.getSize());
             Agente aux = consultaAgenteID(i);
-            aux.setEstado(true);
+            aux.setBorrado(true);
             raf.seek(i * Agente.getSize());
             registroAgente(raf, aux);
         } catch (Exception e) {
@@ -65,7 +65,7 @@ public class ControladorAgentes {
         try {
 
             raf.writeChars(a.getNombre().toString());
-            raf.writeBoolean(a.isEstado());
+            raf.writeBoolean(a.isBorrado());
 
         } catch (Exception ex) {
             ex.getMessage();
@@ -83,7 +83,7 @@ public class ControladorAgentes {
 
             for (int i = 0; i < total; i++) {
                 Agente a = leerAgentes(raf);
-                if (!a.isEstado()) {
+                if (!a.isBorrado()) {
                     System.out.println(i + " " + a.toString());
                 }
             }
@@ -114,7 +114,7 @@ public class ControladorAgentes {
     public Agente consultaAgenteID(int i) {
 
         try {
-            RandomAccessFile raf = new RandomAccessFile("agentes.dat", "rw");
+            RandomAccessFile raf = new RandomAccessFile("agentes.dat", "r");
 
             raf.seek(i * Agente.getSize());
 

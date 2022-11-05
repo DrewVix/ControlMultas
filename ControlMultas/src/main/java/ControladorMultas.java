@@ -36,7 +36,7 @@ public class ControladorMultas {
             RandomAccessFile raf = new RandomAccessFile("multas.dat", "rw");
             raf.seek(i * Agente.getSize());
             Multa aux = consultaMultaID(i);
-            aux.setActivo(false);
+            aux.setBorrado(true);
             raf.seek(i * Multa.getSize());
             registroMulta(raf, aux);
         } catch (Exception e) {
@@ -54,7 +54,7 @@ public class ControladorMultas {
             raf.writeChars(m.getLocalidad().toString());
             raf.writeInt(m.getCoste());
             raf.writeBoolean(m.isPagado());
-            raf.writeBoolean(m.isActivo());
+            raf.writeBoolean(m.isBorrado());
 
         } catch (Exception ex) {
             ex.getMessage();
@@ -109,7 +109,8 @@ public class ControladorMultas {
         }
 
     }
-    public void consultaAllifActivo() {
+
+    public void consultaAllifNotBorrado() {
         try {
             RandomAccessFile raf = new RandomAccessFile("multas.dat", "r");
 
@@ -118,7 +119,7 @@ public class ControladorMultas {
 
             for (int i = 0; i < total; i++) {
                 Multa m = leerMultas(raf);
-                if (m.isActivo()) {
+                if (!m.isBorrado()) {
                     System.out.println(i + " " + m.toString());
                 }
             }
@@ -128,6 +129,7 @@ public class ControladorMultas {
         }
 
     }
+
     public void consultaAll() {
         try {
             RandomAccessFile raf = new RandomAccessFile("multas.dat", "r");
@@ -137,7 +139,7 @@ public class ControladorMultas {
 
             for (int i = 0; i < total; i++) {
                 Multa m = leerMultas(raf);
-                if (m.isActivo() && !m.isPagado()) {
+                if (!m.isBorrado() && !m.isPagado()) {
                     System.out.println(i + " " + m.toString());
                 }
             }
@@ -177,9 +179,9 @@ public class ControladorMultas {
 
             boolean pagado = raf.readBoolean();
 
-            boolean activo = raf.readBoolean();
+            boolean borrado = raf.readBoolean();
 
-            Multa aux = new Multa(numAgente, localidad, coste, pagado, activo);
+            Multa aux = new Multa(numAgente, localidad, coste, pagado, borrado);
             return aux;
         } catch (Exception e) {
             e.getMessage();
