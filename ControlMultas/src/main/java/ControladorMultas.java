@@ -90,45 +90,45 @@ public class ControladorMultas {
 
     }
 
-    public void consultaAllifNotPagado() {
-        try {
-            RandomAccessFile raf = new RandomAccessFile("multas.dat", "r");
+//    public void consultaAllifNotPagado() {
+//        try {
+//            RandomAccessFile raf = new RandomAccessFile("multas.dat", "r");
+//
+//            double total = raf.length() / Multa.getSize();
+//            System.out.println(total);
+//
+//            for (int i = 0; i < total; i++) {
+//                Multa m = leerMultas(raf);
+//                if (!m.isPagado()) {
+//                    System.out.println(i + " " + m.toString());
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.getMessage();
+//
+//        }
+//
+//    }
 
-            double total = raf.length() / Multa.getSize();
-            System.out.println(total);
-
-            for (int i = 0; i < total; i++) {
-                Multa m = leerMultas(raf);
-                if (!m.isPagado()) {
-                    System.out.println(i + " " + m.toString());
-                }
-            }
-        } catch (Exception e) {
-            e.getMessage();
-
-        }
-
-    }
-
-    public void consultaAllifNotBorrado() {
-        try {
-            RandomAccessFile raf = new RandomAccessFile("multas.dat", "r");
-
-            double total = raf.length() / Multa.getSize();
-            System.out.println(total);
-
-            for (int i = 0; i < total; i++) {
-                Multa m = leerMultas(raf);
-                if (!m.isBorrado()) {
-                    System.out.println(i + " " + m.toString());
-                }
-            }
-        } catch (Exception e) {
-            e.getMessage();
-
-        }
-
-    }
+//    public void consultaAllifNotBorrado() {
+//        try {
+//            RandomAccessFile raf = new RandomAccessFile("multas.dat", "r");
+//
+//            double total = raf.length() / Multa.getSize();
+//            System.out.println(total);
+//
+//            for (int i = 0; i < total; i++) {
+//                Multa m = leerMultas(raf);
+//                if (!m.isBorrado()) {
+//                    System.out.println(i + " " + m.toString());
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.getMessage();
+//
+//        }
+//
+//    }
 
     public void consultaAll() {
         try {
@@ -140,7 +140,7 @@ public class ControladorMultas {
             for (int i = 0; i < total; i++) {
                 Multa m = leerMultas(raf);
                 if (!m.isBorrado() && !m.isPagado()) {
-                    System.out.println(i + " " + m.toString());
+                    System.out.println(i + " " + m.toStringMultas());
                 }
             }
         } catch (Exception e) {

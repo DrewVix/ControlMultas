@@ -34,7 +34,7 @@ public class Principal {
                         System.out.println("INTRODUZCA EL COSTE EN EUROS DE LA MULTA: ");
                         int coste = Integer.parseInt(sc.nextLine());
 
-                        cm.alta(new Multa(nAgente, localidad, coste, false,false));
+                        cm.alta(new Multa(nAgente, localidad, coste, false, false));
 
                         break;
 
@@ -50,7 +50,7 @@ public class Principal {
                     case 3:
                         System.out.println("ELIMINAR UNA MULTA: ");
                         System.out.println("--------------------");
-                        cm.consultaAllifNotBorrado();
+                        cm.consultaAll();
                         System.out.println("INTRODUZCA EL NUMERO DE MULTA A ELIMINAR: ");
                         int id3 = Integer.parseInt(sc.nextLine());
                         cm.baja(id3);
@@ -70,17 +70,17 @@ public class Principal {
                     case 5:
                         System.out.println("MODIFICACION DE MULTA: ");
                         System.out.println("-----------------------");
+                        cm.consultaAll();
                         System.out.println("INTRODUCE EL NUMERO DE MULTA QUE DESEA MODIFICAR: ");
                         int id5 = Integer.parseInt(sc.nextLine());
                         System.out.println("INTRODUCE EL NUMERO DEL AGENTE PARA SU MODIFICACION: ");
-                        int numAgente6= Integer.parseInt(sc.nextLine());
+                        int numAgente6 = Integer.parseInt(sc.nextLine());
                         System.out.println("INTRODUZCA LOCALIDAD PARA SU MODIFICACION: ");
-                        String localidad6= sc.nextLine();
+                        String localidad6 = sc.nextLine();
                         System.out.println("INTRODUZCA EL COSTE EN EUROS MODIFICADO: ");
-                        int coste6= Integer.parseInt(sc.nextLine());
-                        
+                        int coste6 = Integer.parseInt(sc.nextLine());
 
-                        cm.modificacion(id5, new Multa(numAgente6, localidad6, coste6, false,false));
+                        cm.modificacion(id5, new Multa(numAgente6, localidad6, coste6, false, false));
                         break;
                     case 6:
                         System.out.println("MODIFICACION DE AGENTE: ");
@@ -95,11 +95,10 @@ public class Principal {
                     case 7:
                         System.out.println("PAGAR UNA MULTA: ");
                         System.out.println("-----------------");
-                        cm.consultaAllifNotPagado();
+                        cm.consultaAll();
                         System.out.println("INTRODUZCA EL NUMERO DE MULTA A PAGAR: ");
                         int id7 = Integer.parseInt(sc.nextLine());
                         cm.pagarMulta(id7);
-
 
                         break;
                     case 8:
@@ -112,10 +111,21 @@ public class Principal {
 
                         break;
                     case 10:
-
+                        System.out.println("CONSULTAR MULTA POR NOMBRE DE AGENTE: ");
+                        System.out.println("--------------------------------------");
+                        System.out.println("INTRODUZCA EL NOMBRE DEL AGENTE QUE QUIERAS CONSULTAR: ");
+                        ca.consultaAll();
+                        String nombreAgente= sc.nextLine();
+                        cm.busquedaPorNombreAgente(nombreAgente);
                         break;
                     case 11:
+                        System.out.println("CONSULTAR MULTA POR ID: ");
+                        System.out.println("------------------------");
+                        System.out.println("INTRODUCE EL ID DE LA MULTA A CONSULTAR: ");
+                        cm.consultaAll();
+                        int id11 = Integer.parseInt(sc.nextLine());
 
+                        System.out.println(cm.consultaMultaID(id11));
                         break;
 
                     default:
@@ -126,6 +136,7 @@ public class Principal {
             } while (op != 12);
 
         } catch (Exception e) {
+            e.getMessage();
         }
 
     }

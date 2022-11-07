@@ -28,6 +28,10 @@ public class Multa {
         return "Multa{" + "nAgente=" + nAgente + ", localidad=" + localidad + ", coste=" + coste + "€ , pagado=" + pagado + ", borrado=" + borrado + '}';
     }
 
+    public String toStringMultas() {
+        return "Multa{" + "nAgente=" + nAgente + ", localidad=" + localidad + ", coste=" + coste + "€  }";
+    }
+
     public boolean isPagado() {
         return pagado;
     }
