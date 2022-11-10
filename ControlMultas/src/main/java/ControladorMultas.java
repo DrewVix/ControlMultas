@@ -12,15 +12,16 @@ import java.nio.charset.StandardCharsets;
  */
 public class ControladorMultas {
 
-    String fichero;
+    private String fichero;
+    private final String permisoRW = "rw";
+    private final String permisoR = "r";
 
     public ControladorMultas(String fichero) {
         this.fichero = fichero;
     }
 
     public void alta(Multa m) {
-        try {
-            RandomAccessFile raf = new RandomAccessFile("multas.dat", "rw");
+        try (RandomAccessFile raf = new RandomAccessFile(this.fichero, permisoRW);) {
 
             raf.seek(raf.length());
             registroMulta(raf, m);
@@ -33,8 +34,7 @@ public class ControladorMultas {
     }
 
     public void baja(int i) {
-        try {
-            RandomAccessFile raf = new RandomAccessFile("multas.dat", "rw");
+        try (RandomAccessFile raf = new RandomAccessFile(this.fichero, permisoRW);) {
             raf.seek(i * Agente.getSize());
             Multa aux = consultaMultaID(i);
             aux.setBorrado(true);
@@ -65,8 +65,7 @@ public class ControladorMultas {
     }
 
     public void modificacion(int i, Multa m) {
-        try {
-            RandomAccessFile raf = new RandomAccessFile("multas.dat", "rw");
+        try (RandomAccessFile raf = new RandomAccessFile(this.fichero, permisoRW);) {
             raf.seek(i * Multa.getSize());
             registroMulta(raf, m);
         } catch (Exception e) {
@@ -77,11 +76,11 @@ public class ControladorMultas {
     }
 
     public void pagarMulta(int i) {
-        try {
-            RandomAccessFile raf = new RandomAccessFile("multas.dat", "rw");
+        try (RandomAccessFile raf = new RandomAccessFile(this.fichero, permisoRW);) {
             raf.seek(i * Agente.getSize());
             Multa aux = consultaMultaID(i);
             aux.setPagado(true);
+            aux.setBorrado(true);
             raf.seek(i * Agente.getSize());
             registroMulta(raf, aux);
         } catch (Exception e) {
@@ -92,8 +91,7 @@ public class ControladorMultas {
     }
 
     public void consultaAll() {
-        try {
-            RandomAccessFile raf = new RandomAccessFile("multas.dat", "r");
+        try (RandomAccessFile raf = new RandomAccessFile(this.fichero, permisoR);) {
 
             double total = raf.length() / Multa.getSize();
             System.out.println(total);
@@ -113,8 +111,7 @@ public class ControladorMultas {
 
     public Multa consultaMultaID(int i) {
 
-        try {
-            RandomAccessFile raf = new RandomAccessFile("multas.dat", "rw");
+        try (RandomAccessFile raf = new RandomAccessFile(this.fichero, permisoRW);) {
 
             raf.seek(i * Multa.getSize());
 
@@ -152,9 +149,9 @@ public class ControladorMultas {
     }
 
     public void busquedaPorNombreAgente(String nombre) {
-        try {
-            RandomAccessFile raf1 = new RandomAccessFile("multas.dat", "r");
-            RandomAccessFile raf2 = new RandomAccessFile("agentes.dat", "r");
+        try (RandomAccessFile raf1 = new RandomAccessFile(this.fichero, permisoR);
+                RandomAccessFile raf2 = new RandomAccessFile(this.fichero, permisoR);) {
+
             int pointerAgente = leerAgentes(raf2, nombre);
             leerMultas10(raf1, pointerAgente);
         } catch (Exception e) {
@@ -166,19 +163,18 @@ public class ControladorMultas {
     public int leerAgentes(RandomAccessFile raf, String nombre) {
         int pointer = -1;
         byte[] nombreArrayOriginal = nombre.getBytes(StandardCharsets.UTF_8);
-        String utf8Nombre= new String (nombreArrayOriginal,StandardCharsets.UTF_8);
+        String utf8Nombre = new String(nombreArrayOriginal, StandardCharsets.UTF_8);
         try {
-            
+
             double total = raf.length() / Agente.getSize();
             for (int i = 0; i < total; i++) {
                 byte[] nombreArray = new byte[50];
                 raf.read(nombreArray);
                 String nombreAgente = new String(transformaSoloImpares(nombreArray));
                 byte[] nombreArrayAgente = nombreAgente.getBytes(StandardCharsets.UTF_8);
-                String utf8NombreAgente= new String (nombreArrayAgente,StandardCharsets.UTF_8);
+                String utf8NombreAgente = new String(nombreArrayAgente, StandardCharsets.UTF_8);
                 boolean eliminado = raf.readBoolean();
-                
-                
+
                 if (utf8Nombre.toString().trim().equalsIgnoreCase(utf8NombreAgente.toString().trim())) {
                     pointer = i;
                 }
@@ -225,12 +221,13 @@ public class ControladorMultas {
         }
 
     }
-    public byte[] transformaSoloImpares(byte[]original){
-        byte[]resultado= new byte[original.length];
-        int j=0;
+
+    public byte[] transformaSoloImpares(byte[] original) {
+        byte[] resultado = new byte[original.length];
+        int j = 0;
         for (int i = 0; i < original.length; i++) {
             if (i % 2 != 0) {
-                resultado[j]=original[i];
+                resultado[j] = original[i];
                 j++;
             }
         }

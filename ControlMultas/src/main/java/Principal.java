@@ -12,12 +12,13 @@ import java.util.Scanner;
 public class Principal {
 
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String fileUsuario = System.getProperty("user.home");
+        String f1 = fileUsuario + "/agentes.dat";
+        String f2 = fileUsuario + "/multas.dat";
+        
         try {
 
-            Scanner sc = new Scanner(System.in);
-            String fileUsuario = System.getProperty("user.home");
-            String f1 = fileUsuario + "/agentes.dat";
-            String f2 = fileUsuario + "/multas.dat";
             int op;
             ControladorAgentes ca = new ControladorAgentes(f1);
             ControladorMultas cm = new ControladorMultas(f2);

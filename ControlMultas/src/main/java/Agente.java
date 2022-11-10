@@ -23,6 +23,9 @@ public class Agente {
         return "Agente{" + "nombre=" + nombre + '}';
     }
     
+    public String toStringParaBorrar() {
+        return "Agente{" + "nombre=" + nombre + "borrado=" + borrado +'}';
+    }
 
     public boolean isBorrado() {
         return borrado;
