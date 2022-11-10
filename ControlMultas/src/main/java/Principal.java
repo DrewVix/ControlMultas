@@ -15,8 +15,9 @@ public class Principal {
         try {
 
             Scanner sc = new Scanner(System.in);
-            String f1 = "agentes.dat";
-            String f2 = "multas.dat";
+            String fileUsuario = System.getProperty("user.home");
+            String f1 = fileUsuario + "/agentes.dat";
+            String f2 = fileUsuario + "/multas.dat";
             int op;
             ControladorAgentes ca = new ControladorAgentes(f1);
             ControladorMultas cm = new ControladorMultas(f2);
@@ -82,6 +83,7 @@ public class Principal {
 
                         cm.modificacion(id5, new Multa(numAgente6, localidad6, coste6, false, false));
                         break;
+
                     case 6:
                         System.out.println("MODIFICACION DE AGENTE: ");
                         System.out.println("------------------------");
@@ -92,6 +94,7 @@ public class Principal {
 
                         ca.modificacion(id6, new Agente(nombre6, false));
                         break;
+
                     case 7:
                         System.out.println("PAGAR UNA MULTA: ");
                         System.out.println("-----------------");
@@ -101,23 +104,26 @@ public class Principal {
                         cm.pagarMulta(id7);
 
                         break;
+
                     case 8:
                         System.out.println("LISTADO DE MULTAS: ");
                         cm.consultaAll();
                         break;
+
                     case 9:
                         System.out.println("LISTADO DE AGENTES: ");
                         ca.consultaAll();
-
                         break;
+
                     case 10:
                         System.out.println("CONSULTAR MULTA POR NOMBRE DE AGENTE: ");
                         System.out.println("--------------------------------------");
                         System.out.println("INTRODUZCA EL NOMBRE DEL AGENTE QUE QUIERAS CONSULTAR: ");
                         ca.consultaAll();
-                        String nombreAgente= sc.nextLine();
+                        String nombreAgente = sc.nextLine();
                         cm.busquedaPorNombreAgente(nombreAgente);
                         break;
+
                     case 11:
                         System.out.println("CONSULTAR MULTA POR ID: ");
                         System.out.println("------------------------");
@@ -129,7 +135,6 @@ public class Principal {
                         break;
 
                     default:
-                        System.out.println("INTRODUCE UN VALOR VALIDO.");
                         break;
                 }
 

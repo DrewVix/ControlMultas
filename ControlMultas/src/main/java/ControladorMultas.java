@@ -1,5 +1,6 @@
 
 import java.io.RandomAccessFile;
+import java.nio.charset.StandardCharsets;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -90,46 +91,6 @@ public class ControladorMultas {
 
     }
 
-//    public void consultaAllifNotPagado() {
-//        try {
-//            RandomAccessFile raf = new RandomAccessFile("multas.dat", "r");
-//
-//            double total = raf.length() / Multa.getSize();
-//            System.out.println(total);
-//
-//            for (int i = 0; i < total; i++) {
-//                Multa m = leerMultas(raf);
-//                if (!m.isPagado()) {
-//                    System.out.println(i + " " + m.toString());
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.getMessage();
-//
-//        }
-//
-//    }
-
-//    public void consultaAllifNotBorrado() {
-//        try {
-//            RandomAccessFile raf = new RandomAccessFile("multas.dat", "r");
-//
-//            double total = raf.length() / Multa.getSize();
-//            System.out.println(total);
-//
-//            for (int i = 0; i < total; i++) {
-//                Multa m = leerMultas(raf);
-//                if (!m.isBorrado()) {
-//                    System.out.println(i + " " + m.toString());
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.getMessage();
-//
-//        }
-//
-//    }
-
     public void consultaAll() {
         try {
             RandomAccessFile raf = new RandomAccessFile("multas.dat", "r");
@@ -188,6 +149,92 @@ public class ControladorMultas {
             System.out.println("ERROR EN EL LISTADO DE AGENTES.");
         }
         return null;
+    }
+
+    public void busquedaPorNombreAgente(String nombre) {
+        try {
+            RandomAccessFile raf1 = new RandomAccessFile("multas.dat", "r");
+            RandomAccessFile raf2 = new RandomAccessFile("agentes.dat", "r");
+            int pointerAgente = leerAgentes(raf2, nombre);
+            leerMultas10(raf1, pointerAgente);
+        } catch (Exception e) {
+            e.getMessage();
+
+        }
+    }
+
+    public int leerAgentes(RandomAccessFile raf, String nombre) {
+        int pointer = -1;
+        byte[] nombreArrayOriginal = nombre.getBytes(StandardCharsets.UTF_8);
+        String utf8Nombre= new String (nombreArrayOriginal,StandardCharsets.UTF_8);
+        try {
+            
+            double total = raf.length() / Agente.getSize();
+            for (int i = 0; i < total; i++) {
+                byte[] nombreArray = new byte[50];
+                raf.read(nombreArray);
+                String nombreAgente = new String(transformaSoloImpares(nombreArray));
+                byte[] nombreArrayAgente = nombreAgente.getBytes(StandardCharsets.UTF_8);
+                String utf8NombreAgente= new String (nombreArrayAgente,StandardCharsets.UTF_8);
+                boolean eliminado = raf.readBoolean();
+                
+                
+                if (utf8Nombre.toString().trim().equalsIgnoreCase(utf8NombreAgente.toString().trim())) {
+                    pointer = i;
+                }
+
+            }
+            return pointer;
+        } catch (Exception e) {
+            e.getMessage();
+            System.out.println("ERROR EN EL LISTADO DE AGENTES.");
+
+        }
+        return -1;
+    }
+
+    public void leerMultas10(RandomAccessFile raf, int pointer) {
+        System.out.println(pointer);
+        try {
+            double total = raf.length() / Multa.getSize();
+            for (int i = 0; i < total; i++) {
+                int numAgente = raf.readInt();
+
+                byte[] localidadArray = new byte[100];
+                raf.read(localidadArray);
+                String localidad = new String(localidadArray);
+
+                int coste = raf.readInt();
+
+                boolean pagado = raf.readBoolean();
+
+                boolean borrado = raf.readBoolean();
+
+                Multa aux = new Multa(numAgente, localidad, coste, pagado, borrado);
+
+                if (aux.getnAgente() == pointer) {
+                    System.out.println(aux.toStringMultas());
+
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            System.out.println("ERROR EN EL LISTADO DE AGENTES.");
+        }
+
+    }
+    public byte[] transformaSoloImpares(byte[]original){
+        byte[]resultado= new byte[original.length];
+        int j=0;
+        for (int i = 0; i < original.length; i++) {
+            if (i % 2 != 0) {
+                resultado[j]=original[i];
+                j++;
+            }
+        }
+        return resultado;
     }
 
 }
