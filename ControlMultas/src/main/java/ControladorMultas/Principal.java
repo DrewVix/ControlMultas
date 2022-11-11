@@ -1,6 +1,5 @@
 package ControladorMultas;
 
-
 import java.util.Scanner;
 
 /*
@@ -16,9 +15,10 @@ public class Principal {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String fileUsuario = System.getProperty("user.home");
-        String f1 = fileUsuario + "/agentes.dat";
-        String f2 = fileUsuario + "/multas.dat";
-        
+        String separator = System.getProperty("file.separator");
+        String f1 = fileUsuario + separator + "agentes.dat";
+        String f2 = fileUsuario + separator + "multas.dat";
+
         try {
 
             int op;
