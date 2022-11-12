@@ -26,7 +26,7 @@ public class ControladorAgentes {
 
             raf.seek(raf.length());
             registroAgente(raf, a);
-            System.out.println(Agente.getSize());
+            
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("FALLO EN ALTA DE AGENTE.");
@@ -77,12 +77,12 @@ public class ControladorAgentes {
         try (RandomAccessFile raf = new RandomAccessFile(this.fichero, permisoR);) {
 
             double total = raf.length() / Agente.getSize();
-            System.out.println(total);
+            System.out.println("TOTAL DE AGENTES REGISTRADOS: "+ (int)total);
 
             for (int i = 0; i < total; i++) {
                 Agente a = leerAgentes(raf);
                 if (!a.isBorrado()) {
-                    System.out.println(i + " " + a.toString());
+                    System.out.println("IDENTIFICADOR AGENTE: "+ i + " " + a.toString());
                 }
             }
         } catch (Exception e) {

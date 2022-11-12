@@ -4,7 +4,6 @@ package ControladorMultas;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 /**
  *
  * @author dev
@@ -22,11 +21,11 @@ public class Agente {
 
     @Override
     public String toString() {
-        return "Agente{" + "nombre=" + nombre + '}';
+        return "| INFORMACION AGENTE" + " ➞ NOMBRE: " + nombre + '|';
     }
-    
+
     public String toStringParaBorrar() {
-        return "Agente{" + "nombre=" + nombre + "borrado=" + borrado +'}';
+        return "| INFORMACION AGENTE: " + "➞ NOMBRE: " + nombre + "| ELIMINADO: " + borrado + " |";
     }
 
     public boolean isBorrado() {

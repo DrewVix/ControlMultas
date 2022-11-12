@@ -1,6 +1,5 @@
 package ControladorMultas;
 
-
 import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
 
@@ -27,7 +26,7 @@ public class ControladorMultas {
 
             raf.seek(raf.length());
             registroMulta(raf, m);
-            System.out.println(Multa.getSize());
+
         } catch (Exception e) {
             e.getMessage();
             System.out.println("FALLO EN ALTA DE MULTA.");
@@ -85,6 +84,7 @@ public class ControladorMultas {
             aux.setBorrado(true);
             raf.seek(i * Agente.getSize());
             registroMulta(raf, aux);
+            System.out.println("MULTA PAGADA.");
         } catch (Exception e) {
             e.getMessage();
             System.out.println("ERROR EN EL PAGO DE LA MULTA.");
@@ -96,12 +96,11 @@ public class ControladorMultas {
         try (RandomAccessFile raf = new RandomAccessFile(this.fichero, permisoR);) {
 
             double total = raf.length() / Multa.getSize();
-            System.out.println(total);
 
             for (int i = 0; i < total; i++) {
                 Multa m = leerMultas(raf);
                 if (!m.isBorrado() && !m.isPagado()) {
-                    System.out.println(i + " " + m.toStringMultas());
+                    System.out.println("IDENTIFICADOR MULTA: " + i + " " + m.toStringMultas());
                 }
             }
         } catch (Exception e) {
@@ -150,14 +149,14 @@ public class ControladorMultas {
         return null;
     }
 
-    public void busquedaPorNombreAgente(String nombre) {
+    public void busquedaPorNombreAgente(String nombre,String fichero) {
         try (RandomAccessFile raf1 = new RandomAccessFile(this.fichero, permisoR);
-                RandomAccessFile raf2 = new RandomAccessFile(this.fichero, permisoR);) {
+                RandomAccessFile raf2 = new RandomAccessFile(fichero, permisoR);) {
 
             int pointerAgente = leerAgentes(raf2, nombre);
             leerMultas10(raf1, pointerAgente);
         } catch (Exception e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
 
         }
     }
@@ -169,57 +168,67 @@ public class ControladorMultas {
         try {
 
             double total = raf.length() / Agente.getSize();
+            System.out.println((int) total + ": total agentes");
             for (int i = 0; i < total; i++) {
+                System.out.println("agente posicion: " + i);
                 byte[] nombreArray = new byte[50];
                 raf.read(nombreArray);
                 String nombreAgente = new String(transformaSoloImpares(nombreArray));
                 byte[] nombreArrayAgente = nombreAgente.getBytes(StandardCharsets.UTF_8);
                 String utf8NombreAgente = new String(nombreArrayAgente, StandardCharsets.UTF_8);
                 boolean eliminado = raf.readBoolean();
-
-                if (utf8Nombre.toString().trim().equalsIgnoreCase(utf8NombreAgente.toString().trim())) {
-                    pointer = i;
+                
+                if (!eliminado) {
+                    if (utf8Nombre.toString().trim().equalsIgnoreCase(utf8NombreAgente.toString().trim())) {
+                        pointer = i;
+                        return pointer;
+                    }
                 }
 
             }
-            return pointer;
+
         } catch (Exception e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
             System.out.println("ERROR EN EL LISTADO DE AGENTES.");
 
         }
-        return -1;
+        return pointer;
     }
 
     public void leerMultas10(RandomAccessFile raf, int pointer) {
         System.out.println(pointer);
-        try {
-            double total = raf.length() / Multa.getSize();
-            for (int i = 0; i < total; i++) {
-                int numAgente = raf.readInt();
+        if (pointer == -1) {
+            System.out.println("ERROR.");
+        } else {
+            try {
+                double total = raf.length() / Multa.getSize();
+                for (int i = 0; i < total; i++) {
+                    int numAgente = raf.readInt();
 
-                byte[] localidadArray = new byte[100];
-                raf.read(localidadArray);
-                String localidad = new String(localidadArray);
+                    byte[] localidadArray = new byte[100];
+                    raf.read(localidadArray);
+                    String localidad = new String(localidadArray);
 
-                int coste = raf.readInt();
+                    int coste = raf.readInt();
 
-                boolean pagado = raf.readBoolean();
+                    boolean pagado = raf.readBoolean();
 
-                boolean borrado = raf.readBoolean();
+                    boolean borrado = raf.readBoolean();
 
-                Multa aux = new Multa(numAgente, localidad, coste, pagado, borrado);
+                    Multa aux = new Multa(numAgente, localidad, coste, pagado, borrado);
 
-                if (aux.getnAgente() == pointer) {
-                    System.out.println(aux.toStringMultas());
+                    if (aux.getnAgente() == pointer) {
+                        System.out.println(aux.toStringMultas());
+
+                    }
 
                 }
 
+            } catch (Exception e) {
+                e.getMessage();
+                System.out.println("ERROR EN EL LISTADO DE AGENTES.");
             }
 
-        } catch (Exception e) {
-            e.getMessage();
-            System.out.println("ERROR EN EL LISTADO DE AGENTES.");
         }
 
     }

@@ -27,11 +27,11 @@ public class Multa {
 
     @Override
     public String toString() {
-        return "Multa{" + "nAgente=" + nAgente + ", localidad=" + localidad + ", coste=" + coste + "€ , pagado=" + pagado + ", borrado=" + borrado + '}';
+        return "| INFORMACION MULTA ➞ " + "NUMERO AGENTE: " + nAgente + " | LOCALIDAD: " + localidad + " | COSTE: " + coste + "€"+ " | BORRADO: "+borrado+" |" ;
     }
 
     public String toStringMultas() {
-        return "Multa{" + "nAgente=" + nAgente + ", localidad=" + localidad + ", coste=" + coste + "€  }";
+        return "| INFORMACION MULTA ➞ " + "NUMERO AGENTE: " + nAgente + " | LOCALIDAD: " + localidad + " | COSTE: " + coste + "€  |";
     }
 
     public boolean isPagado() {

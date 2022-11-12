@@ -24,6 +24,7 @@ public class Principal {
             int op;
             ControladorAgentes ca = new ControladorAgentes(f1);
             ControladorMultas cm = new ControladorMultas(f2);
+            
 
             do {
                 op = menu(sc);
@@ -31,6 +32,10 @@ public class Principal {
                     case 1:
                         System.out.println("NUEVA MULTA: ");
                         System.out.println("-------------");
+                        System.out.println("LISTADO DE AGENTES: ");
+                        System.out.println("--------------------");
+                        ca.consultaAll();
+                        System.out.println("-----------------------------");
                         System.out.println("INTRODUZCA NUMERO DE AGENTE: ");
                         int nAgente = Integer.parseInt(sc.nextLine());
                         System.out.println("INTRODUZCA LA LOCALIDAD DESDE DONDE SE DETALLA LA MULTA: ");
@@ -110,21 +115,26 @@ public class Principal {
 
                     case 8:
                         System.out.println("LISTADO DE MULTAS: ");
+                        System.out.println("-------------------");
                         cm.consultaAll();
+                        System.out.println("-------------------");
                         break;
 
                     case 9:
                         System.out.println("LISTADO DE AGENTES: ");
+                        System.out.println("--------------------");
                         ca.consultaAll();
+                        System.out.println("--------------------");
                         break;
 
                     case 10:
                         System.out.println("CONSULTAR MULTA POR NOMBRE DE AGENTE: ");
                         System.out.println("--------------------------------------");
-                        System.out.println("INTRODUZCA EL NOMBRE DEL AGENTE QUE QUIERAS CONSULTAR: ");
                         ca.consultaAll();
+                        System.out.println("-------------------------------------------------------");
+                        System.out.println("INTRODUZCA EL NOMBRE DEL AGENTE QUE QUIERAS CONSULTAR: ");
                         String nombreAgente = sc.nextLine();
-                        cm.busquedaPorNombreAgente(nombreAgente);
+                        cm.busquedaPorNombreAgente(nombreAgente,f1);
                         break;
 
                     case 11:
