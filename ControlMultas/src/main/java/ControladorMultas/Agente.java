@@ -25,7 +25,12 @@ public class Agente {
     }
 
     public String toStringParaBorrar() {
-        return "| INFORMACION AGENTE: " + "➞ NOMBRE: " + nombre + "| ELIMINADO: " + borrado + " |";
+        if (borrado) {
+          return "| INFORMACION AGENTE: " + "➞ NOMBRE: " + nombre + "| ELIMINADO: " + "SI" + " |";  
+        }else{
+           return "| INFORMACION AGENTE: " + "➞ NOMBRE: " + nombre + "| ELIMINADO: " + "NO" + " |";   
+        }
+        
     }
 
     public boolean isBorrado() {
