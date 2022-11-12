@@ -149,9 +149,9 @@ public class ControladorMultas {
         return null;
     }
 
-    public void busquedaPorNombreAgente(String nombre,String fichero) {
+    public void busquedaPorNombreAgente(String nombre, String ficheroAgentes) {
         try (RandomAccessFile raf1 = new RandomAccessFile(this.fichero, permisoR);
-                RandomAccessFile raf2 = new RandomAccessFile(fichero, permisoR);) {
+                RandomAccessFile raf2 = new RandomAccessFile(ficheroAgentes, permisoR);) {
 
             int pointerAgente = leerAgentes(raf2, nombre);
             leerMultas10(raf1, pointerAgente);
@@ -168,16 +168,16 @@ public class ControladorMultas {
         try {
 
             double total = raf.length() / Agente.getSize();
-            System.out.println((int) total + ": total agentes");
+
             for (int i = 0; i < total; i++) {
-                System.out.println("agente posicion: " + i);
+
                 byte[] nombreArray = new byte[50];
                 raf.read(nombreArray);
                 String nombreAgente = new String(transformaSoloImpares(nombreArray));
                 byte[] nombreArrayAgente = nombreAgente.getBytes(StandardCharsets.UTF_8);
                 String utf8NombreAgente = new String(nombreArrayAgente, StandardCharsets.UTF_8);
                 boolean eliminado = raf.readBoolean();
-                
+
                 if (!eliminado) {
                     if (utf8Nombre.toString().trim().equalsIgnoreCase(utf8NombreAgente.toString().trim())) {
                         pointer = i;
@@ -196,7 +196,7 @@ public class ControladorMultas {
     }
 
     public void leerMultas10(RandomAccessFile raf, int pointer) {
-        System.out.println(pointer);
+        
         if (pointer == -1) {
             System.out.println("ERROR.");
         } else {
